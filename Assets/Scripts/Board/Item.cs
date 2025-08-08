@@ -26,7 +26,7 @@ public class Item
         }
     }
 
-    protected virtual string GetPrefabName() { return string.Empty; }
+    public virtual string GetPrefabName() { return string.Empty; }
 
     public virtual void SetCell(Cell cell)
     {

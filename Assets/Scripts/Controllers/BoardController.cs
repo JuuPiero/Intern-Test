@@ -31,6 +31,10 @@ public class BoardController : MonoBehaviour
 
     private bool m_gameOver;
 
+
+    // [SerializeField] private BottomBoard bottomBoard;
+
+
     public void StartGame(GameManager gameManager, GameSettings gameSettings)
     {
         m_gameManager = gameManager;
@@ -95,6 +99,9 @@ public class BoardController : MonoBehaviour
             }
         }
 
+
+
+        // return;
         if (Input.GetMouseButtonUp(0))
         {
             ResetRayCast();

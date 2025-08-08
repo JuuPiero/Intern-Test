@@ -25,3 +25,21 @@
 
 ---
 
+### Task 2: Change Gameplay
+- **Task Description:** Change the current gameplay to a new mechanic where players tap items on a multi-layered board to move them down to a separate bottom area. When exactly three identical items gather in the bottom cells, they are cleared. The player wins by clearing the entire board and loses if the bottom cells become full before clearing the board.
+- **Work Done:**  
+  -Redesigned the board as a multi-layer structure, using a list of dictionaries (`List<Dictionary<Vector2Int, Cell>>`) to represent stacked layers.
+  - Implemented `InitBoard` method to initialize multiple board layers with randomly assigned item types (`NormalItem.eNormalType`).
+  - Developed cell picking logic allowing players to tap on items to move them down to a dedicated `pickedContainer` at the bottom, with smooth animations handled by DOTween.
+  - Created `CheckMatches` function to detect and clear groups of exactly three identical items in the bottom cells, removing them with animations and updating the player's score.
+  - Added win condition checks (`IsBoardCleared`) and lose condition checks (if bottom cells reach max capacity).
+  - Fixed sprite sorting order to ensure backgrounds do not overlap icons incorrectly, setting backgrounds with lower sorting order than item icons.
+  - Calculated cell spawn positions with proper offsets to center the board horizontally and vertically on screen.
+  - Developed an auto-play coroutine for automated testing of picking and clearing mechanics, simulating gameplay to validate functionality.
+- **Result:**  
+  - The new gameplay mechanic with multi-layered board and bottom cell matching is fully functional and visually coherent.
+  - The player can interact by tapping cells to move items down, clear matches of three, and either win or lose based on the game state.
+  - Animations and UI layering provide smooth and clear visual feedback.
+  - Code structure allows easy future expansion or modification of gameplay features.
+---
+

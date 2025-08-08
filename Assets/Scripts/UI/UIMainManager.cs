@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NewGameplay;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIMainManager : MonoBehaviour
@@ -22,28 +24,31 @@ public class UIMainManager : MonoBehaviour
         {
             m_menuList[i].Setup(this);
         }
+
+        GameController.Instance.OnGameStateChanged += OnGameStateChange;
     }
 
     internal void ShowMainMenu()
     {
-        m_gameManager.ClearLevel();
-        m_gameManager.SetState(GameManager.eStateGame.MAIN_MENU);
+        // m_gameManager.ClearLevel();
+        // m_gameManager.SetState(GameManager.eStateGame.MAIN_MENU);
+        GameController.Instance.State = GameManager.eStateGame.MAIN_MENU;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (m_gameManager.State == GameManager.eStateGame.GAME_STARTED)
-            {
-                m_gameManager.SetState(GameManager.eStateGame.PAUSE);
-            }
-            else if (m_gameManager.State == GameManager.eStateGame.PAUSE)
-            {
-                m_gameManager.SetState(GameManager.eStateGame.GAME_STARTED);
-            }
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Escape))
+    //     {
+    //         if (m_gameManager.State == GameManager.eStateGame.GAME_STARTED)
+    //         {
+    //             m_gameManager.SetState(GameManager.eStateGame.PAUSE);
+    //         }
+    //         else if (m_gameManager.State == GameManager.eStateGame.PAUSE)
+    //         {
+    //             m_gameManager.SetState(GameManager.eStateGame.GAME_STARTED);
+    //         }
+    //     }
+    // }
 
     internal void Setup(GameManager gameManager)
     {
@@ -68,6 +73,9 @@ public class UIMainManager : MonoBehaviour
                 break;
             case GameManager.eStateGame.GAME_OVER:
                 ShowMenu<UIPanelGameOver>();
+                break;
+            case GameManager.eStateGame.WIN:
+                ShowMenu<UIPanelWin>();
                 break;
         }
     }

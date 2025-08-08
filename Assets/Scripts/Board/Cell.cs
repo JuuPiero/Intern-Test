@@ -20,6 +20,17 @@ public class Cell : MonoBehaviour
 
     public bool IsEmpty => Item == null;
 
+    // ______________ NEW GAMEPLAY ________________________________________________________________
+    public int Layer;
+    public void Setup(int layer, Vector2Int pos)
+    {
+        Setup(pos.x, pos.y);
+        Layer = layer;
+    }
+    // ______________________________________________________________________________
+
+
+
     public void Setup(int cellX, int cellY)
     {
         this.BoardX = cellX;

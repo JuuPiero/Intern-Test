@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
         GAME_STARTED,
         PAUSE,
         GAME_OVER,
+        WIN,
     }
 
     private eStateGame m_state;
@@ -60,10 +61,9 @@ public class GameManager : MonoBehaviour
         State = eStateGame.MAIN_MENU;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (m_boardController != null) m_boardController.Update();
+        // if (m_boardController != null) m_boardController.Update();
     }
 
 
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         State = state;
 
-        if(State == eStateGame.PAUSE)
+        if (State == eStateGame.PAUSE)
         {
             DOTween.PauseAll();
         }
@@ -136,4 +136,8 @@ public class GameManager : MonoBehaviour
             m_levelCondition = null;
         }
     }
+
+
+    // Tự động win: Chọn lần lượt tất cả cell trên board để clear hết (nếu game logic cho phép)
+   
 }

@@ -22,7 +22,7 @@ public class NormalItem : Item
         ItemType = type;
     }
 
-    protected override string GetPrefabName()
+    public override string GetPrefabName()
     {
         string prefabname = string.Empty;
         switch (ItemType)
@@ -52,6 +52,18 @@ public class NormalItem : Item
 
         return prefabname;
     }
+
+    public static readonly Dictionary<NormalItem.eNormalType, Color> Colors =
+        new Dictionary<NormalItem.eNormalType, Color>()
+        {
+            { NormalItem.eNormalType.TYPE_ONE,   Color.red },
+            { NormalItem.eNormalType.TYPE_TWO,   Color.green },
+            { NormalItem.eNormalType.TYPE_THREE, Color.blue },
+            { NormalItem.eNormalType.TYPE_FOUR,  Color.yellow },
+            { NormalItem.eNormalType.TYPE_FIVE,  Color.magenta },
+            { NormalItem.eNormalType.TYPE_SIX,   Color.cyan },
+            { NormalItem.eNormalType.TYPE_SEVEN, new Color(1f, 0.5f, 0f) } // cam
+        };
 
     internal override bool IsSameType(Item other)
     {
