@@ -43,3 +43,30 @@
   - Code structure allows easy future expansion or modification of gameplay features.
 ---
 
+### Task 3: Improve the Gameplay
+- **Task Description:** 
+  - Ensure the initial board contains all types of fish.  
+  - Add animations for moving items from the board to bottom cells and clearing identical items (scale to zero).  
+  - Add a "Time Attack" button on the Home Screen to start a separate game mode.  
+  - In Time Attack mode:  
+  - Player does not lose when bottom cells are filled.  
+  - Player can return an item from a bottom cell back to its original position on the board by tapping it.  
+  - Player loses if the board is not cleared within 1 minute.  
+- **Work Done:**  
+  - Modified board initialization logic to guarantee that every fish type appears at least once at the start of the game.  
+  - Implemented smooth DOTween animations for:  
+  - Moving items from board to bottom cells.  
+  - Clearing matched identical items by scaling them down to zero before removal.  
+  - Added a "Time Attack" button in the Home Screen UI to allow starting this mode.  
+  - Adjusted gameplay rules for Time Attack mode:  
+  - Disabled lose condition triggered by bottom cells filling up.  
+  - Enabled tapping on bottom cells to return items back to their original board positions.  
+  - Implemented a 60-second countdown timer that ends the game if the board is not cleared in time.  
+- **Result:**  
+  - Time Attack mode successfully integrated with dedicated start button on Home Screen UI.
+  - Lose condition on bottom cells filling is disabled in Time Attack mode, aligning with new gameplay rules.
+  - Item return functionality implemented, allowing users to revert moves by tapping bottom cells.
+  - 60-second countdown timer enforces time limit, triggering loss if board is uncleared within duration.
+  - Overall system stability maintained with no performance regressions observed during tests.
+---
+

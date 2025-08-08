@@ -33,7 +33,12 @@ namespace NewGameplay
 
         public void PickCell(Cell cell)
         {
-            if (_pickedCells.Contains(cell)) return;
+            if (_pickedCells.Contains(cell))
+            {
+                BackCellToBoard(cell, 0.5f);
+              
+                return;
+            }
             if (_pickedCells.Count >= _levelData.maxPickedCell) return;
 
             MoveCellToBottom(cell, 0.5f);
@@ -67,9 +72,10 @@ namespace NewGameplay
                     // GET SCORE 
 
                     // Animate rồi remove
-                    foreach (var cell in sameTypeCells.Take(3)) // chỉ lấy 3 cell thôi
+                    foreach (var cell in sameTypeCells.Take(3)) 
                     {
-                        cell?.transform.DOScale(Vector3.zero, 0.5f)
+                        if (cell == null) return;
+                        cell.transform.DOScale(Vector3.zero, 0.5f)
                             .SetEase(Ease.InBack)
                             .OnComplete(() =>
                             {
@@ -82,7 +88,7 @@ namespace NewGameplay
                 }
             }
 
-            if (_pickedCells.Count >= _levelData.maxPickedCell)
+            if (_pickedCells.Count >= _levelData.maxPickedCell && !GameController.Instance.isTimeAttackMode)
             {
                 Debug.Log("Thua");
                 GameController.Instance.State = GameManager.eStateGame.GAME_OVER;
@@ -126,6 +132,20 @@ namespace NewGameplay
                 Vector3 targetPos = startPos + new Vector3(i * spacing, 0, 0);
                 child.DOMove(targetPos, duration).SetEase(Ease.InOutQuad);
             }
+        }
+
+
+        public void BackCellToBoard(Cell cell, float duration)
+        {
+            if (cell == null || cell.gameObject == null) return;
+
+            // Thêm cell vào container trước 
+            cell.transform.SetParent(transform);
+            cell.transform.DOMove(cell.prevPos, duration).SetEase(Ease.InOutQuad).OnComplete(() =>
+            {
+                _pickedCells.Remove(cell);
+                _layers[cell.Layer][new Vector2Int(cell.BoardX, cell.BoardY)] = cell;
+            });
         }
 
         private List<NormalItem.eNormalType> GenerateShuffledItems(int totalCells)

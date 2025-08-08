@@ -22,10 +22,12 @@ public class Cell : MonoBehaviour
 
     // ______________ NEW GAMEPLAY ________________________________________________________________
     public int Layer;
+    public Vector3 prevPos;
     public void Setup(int layer, Vector2Int pos)
     {
         Setup(pos.x, pos.y);
         Layer = layer;
+        prevPos = transform.position;
     }
     // ______________________________________________________________________________
 

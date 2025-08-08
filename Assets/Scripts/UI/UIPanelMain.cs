@@ -11,6 +11,9 @@ public class UIPanelMain : MonoBehaviour, IMenu
 
     [SerializeField] private Button btnMoves;
 
+    [SerializeField] private Button btnAttackMode;
+
+
     [SerializeField] private Button btnAutoPlay;
     [SerializeField] private Button btnAutoLose;
 
@@ -21,6 +24,8 @@ public class UIPanelMain : MonoBehaviour, IMenu
     {
         btnMoves.onClick.AddListener(OnClickMoves);
         btnTimer?.onClick.AddListener(OnClickTimer);
+
+        btnAttackMode.onClick.AddListener(OnClickAttackMode);
 
 
         btnAutoPlay.onClick.AddListener(() =>
@@ -37,11 +42,20 @@ public class UIPanelMain : MonoBehaviour, IMenu
         });
     }
 
-    private void OnDestroy()
+    private void OnClickAttackMode()
     {
-        if (btnMoves) btnMoves.onClick.RemoveAllListeners();
-        if (btnTimer) btnTimer.onClick.RemoveAllListeners();
+        GameController.Instance.State = GameManager.eStateGame.GAME_STARTED;
+        GameController.Instance.PlayTimeAttackMode();
     }
+
+    private void OnClickMoves()
+    {
+        // m_mngr.LoadLevelMoves();
+        GameController.Instance.State = GameManager.eStateGame.GAME_STARTED;
+        GameController.Instance.LoadLevel();
+        Hide();
+    }
+
 
     public void Setup(UIMainManager mngr)
     {
@@ -53,12 +67,12 @@ public class UIPanelMain : MonoBehaviour, IMenu
         m_mngr.LoadLevelTimer();
     }
 
-    private void OnClickMoves()
+   
+
+        private void OnDestroy()
     {
-        // m_mngr.LoadLevelMoves();
-        GameController gameController = FindFirstObjectByType<GameController>();
-        gameController.LoadLevel();
-        Hide();
+        if (btnMoves) btnMoves.onClick.RemoveAllListeners();
+        if (btnTimer) btnTimer.onClick.RemoveAllListeners();
     }
 
     public void Show()

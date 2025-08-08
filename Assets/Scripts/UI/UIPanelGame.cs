@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NewGameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,20 @@ public class UIPanelGame : MonoBehaviour,IMenu
     {
         btnPause.onClick.AddListener(OnClickPause);
     }
+
+    private void Start()
+    {
+        if (!GameController.Instance.isTimeAttackMode)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    void Update()
+    {
+        LevelConditionView.text = ((int)GameController.Instance.timeRemaining).ToString();
+    }
+
 
     private void OnClickPause()
     {

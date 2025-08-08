@@ -27,5 +27,8 @@ namespace NewGameplay
         public int randomLayerCount = 2; // số layer random phía trên
         public int matchesMin = 3;
         public int maxPickedCell = 5;
+
+        public float timeLimit = 60f; 
+
     }
 }

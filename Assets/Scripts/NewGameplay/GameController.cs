@@ -26,7 +26,9 @@ namespace NewGameplay
         public event Action<GameManager.eStateGame> OnGameStateChanged;
 
         [SerializeField] private Camera mainCamera;
+        public float timeRemaining;
 
+        public bool isTimeAttackMode = false;
 
 
         private void Awake()
@@ -41,13 +43,22 @@ namespace NewGameplay
         {
             if (_levelData == null) return;
             _boardManager.InitBoard(_levelData);
+            isTimeAttackMode = false;
+        }
+
+        public void PlayTimeAttackMode()
+        {
+            LoadLevel();
+            timeRemaining = _levelData.timeLimit;
+            StartCoroutine(Countdown());
+            isTimeAttackMode = true;
         }
 
 
         public void Update()
         {
-            if (State == GameManager.eStateGame.GAME_OVER)  return;
-            if (State == GameManager.eStateGame.WIN)  return;
+            if (State == GameManager.eStateGame.GAME_OVER) return;
+            if (State == GameManager.eStateGame.WIN) return;
 
 
             if (Input.GetMouseButtonDown(0))
@@ -62,6 +73,16 @@ namespace NewGameplay
             }
         }
 
+        private IEnumerator Countdown()
+        {
+            while (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                yield return null;
+            }
+
+            State = GameManager.eStateGame.GAME_OVER;
+        }
         public void AutoWin()
         {
             StartCoroutine(AutoWinCoroutine());
