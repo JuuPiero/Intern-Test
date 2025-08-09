@@ -44,7 +44,6 @@ public class UIPanelMain : MonoBehaviour, IMenu
 
     private void OnClickAttackMode()
     {
-        GameController.Instance.State = GameManager.eStateGame.GAME_STARTED;
         GameController.Instance.PlayTimeAttackMode();
     }
 

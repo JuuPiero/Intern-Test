@@ -93,7 +93,6 @@ namespace NewGameplay
 
             if (_pickedCells.Count >= _levelData.maxPickedCell && !GameController.Instance.isTimeAttackMode)
             {
-                Debug.Log("Thua");
                 GameController.Instance.State = GameManager.eStateGame.GAME_OVER;
             }
 
@@ -101,6 +100,10 @@ namespace NewGameplay
             if (transform.childCount == 0)
             {
                 Debug.Log("thắng!");
+                // if (GameController.Instance.isTimeAttackMode)
+                // {
+                //     GameController.Instance.isTimeAttackMode = false;
+                // }
                 GameController.Instance.State = GameManager.eStateGame.WIN;
             }
         }

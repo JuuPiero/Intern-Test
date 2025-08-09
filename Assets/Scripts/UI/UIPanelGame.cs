@@ -18,15 +18,28 @@ public class UIPanelGame : MonoBehaviour,IMenu
         btnPause.onClick.AddListener(OnClickPause);
     }
 
-    void Start()
+    // void Start()
+    // {
+    //     if (!GameController.Instance.isTimeAttackMode)
+    //     {
+    //         LevelConditionView.gameObject.SetActive(false);
+    //     }
+    //     else
+    //     {
+    //         LevelConditionView.gameObject.SetActive(true);
+    //     }
+    // }
+
+    void OnEnable()
     {
-        if (!GameController.Instance.isTimeAttackMode)
+        print(GameController.Instance.isTimeAttackMode);
+        if (GameController.Instance.isTimeAttackMode)
         {
-            LevelConditionView.gameObject.SetActive(false);
+            LevelConditionView.gameObject.SetActive(true);
         }
         else
         {
-            LevelConditionView.gameObject.SetActive(true);
+            LevelConditionView.gameObject.SetActive(false);
         }
     }
 
@@ -51,17 +64,11 @@ public class UIPanelGame : MonoBehaviour,IMenu
     {
         this.gameObject.SetActive(true);
 
-        if (GameController.Instance.isTimeAttackMode)
-        {
-            LevelConditionView.gameObject.SetActive(true);
-
-        }
-        else
-        {
-            LevelConditionView.gameObject.SetActive(false);
-        }
+        
        
     }
+
+   
 
     public void Hide()
     {

@@ -29,7 +29,7 @@ namespace NewGameplay
         public float timeRemaining;
 
         public bool isTimeAttackMode = false;
-
+        public Coroutine countDown;
 
         private void Awake()
         {
@@ -42,24 +42,33 @@ namespace NewGameplay
         public void LoadLevel()
         {
             if (_levelData == null) return;
-            _boardManager.InitBoard(_levelData);
             isTimeAttackMode = false;
+            State = GameManager.eStateGame.GAME_STARTED;
+            _boardManager.InitBoard(_levelData);
         }
 
         public void PlayTimeAttackMode()
         {
-            LoadLevel();
-            timeRemaining = _levelData.timeLimit;
+            if (_levelData == null) return;
             isTimeAttackMode = true;
-            StartCoroutine(Countdown());
+            State = GameManager.eStateGame.GAME_STARTED;
+            _boardManager.InitBoard(_levelData);
+            timeRemaining = _levelData.timeLimit;
+            countDown = StartCoroutine(Countdown());
         }
 
 
         public void Update()
         {
-            if (State == GameManager.eStateGame.GAME_OVER) return;
-            if (State == GameManager.eStateGame.WIN) return;
-
+            if (State == GameManager.eStateGame.GAME_OVER || State == GameManager.eStateGame.WIN)
+            {
+                if (isTimeAttackMode)
+                {
+                    StopCoroutine(countDown);
+                    isTimeAttackMode = false;
+                }
+                return;
+            }
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -73,7 +82,7 @@ namespace NewGameplay
             }
         }
 
-        private IEnumerator Countdown()
+        public IEnumerator Countdown()
         {
             while (timeRemaining > 0)
             {
