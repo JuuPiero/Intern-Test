@@ -12,6 +12,8 @@ namespace NewGameplay
         private List<Dictionary<Vector2Int, Cell>> _layers = new();
         public List<Dictionary<Vector2Int, Cell>> Layers => _layers;
 
+        public bool isPicking;
+
         public List<Cell> GetAvailableCells()
         {
             var available = new List<Cell>();
@@ -33,13 +35,14 @@ namespace NewGameplay
 
         public void PickCell(Cell cell)
         {
-            if (_pickedCells.Contains(cell))
+            if (_pickedCells.Contains(cell) && GameController.Instance.isTimeAttackMode)
             {
+                if (isPicking) return;
                 BackCellToBoard(cell, 0.5f);
-              
                 return;
             }
             if (_pickedCells.Count >= _levelData.maxPickedCell) return;
+            if (_pickedCells.Contains(cell)) return;
 
             MoveCellToBottom(cell, 0.5f);
             _pickedCells.Add(cell);
@@ -115,22 +118,30 @@ namespace NewGameplay
         public void MoveCellToBottom(Cell cell, float duration)
         {
             if (cell == null || cell.gameObject == null) return;
+            // isPicking = true;
             float spacing = 1.0f; // Khoảng cách giữa các cell
 
             // Thêm cell vào container trước 
             cell.transform.SetParent(pickedContainer);
 
-          
+
             int total = pickedContainer.childCount;
             float totalWidth = (total - 1) * spacing;
             Vector3 center = pickedContainer.position;
             Vector3 startPos = center - new Vector3(totalWidth / 2f, 0, 0);
 
+            // int completedTweens = 0;
             for (int i = 0; i < total; i++)
             {
                 Transform child = pickedContainer.GetChild(i);
                 Vector3 targetPos = startPos + new Vector3(i * spacing, 0, 0);
                 child.DOMove(targetPos, duration).SetEase(Ease.InOutQuad);
+                // .OnComplete(() =>
+                // {
+                //     completedTweens++;
+                //     if (completedTweens == total)
+                //         isPicking = false; // Chỉ mở khóa khi tất cả cell di chuyển xong
+                // });
             }
         }
 
@@ -138,13 +149,14 @@ namespace NewGameplay
         public void BackCellToBoard(Cell cell, float duration)
         {
             if (cell == null || cell.gameObject == null) return;
-
+            isPicking = true;
             // Thêm cell vào container trước 
             cell.transform.SetParent(transform);
             cell.transform.DOMove(cell.prevPos, duration).SetEase(Ease.InOutQuad).OnComplete(() =>
             {
                 _pickedCells.Remove(cell);
                 _layers[cell.Layer][new Vector2Int(cell.BoardX, cell.BoardY)] = cell;
+                isPicking = false;
             });
         }
 
@@ -222,7 +234,6 @@ namespace NewGameplay
             }
         }
 
-
         public void Clear()
         {
             _layers.Clear();
@@ -230,7 +241,6 @@ namespace NewGameplay
             _pickedCells.Clear();
             pickedContainer.ClearChildren();
         }
-
 
         private void CreateLayer(int layerIndex, int rows, int cols, List<NormalItem.eNormalType> types)
         {
@@ -271,7 +281,6 @@ namespace NewGameplay
                     layerDict[new Vector2Int(x, y)] = cell;
                 }
             }
-
             _layers.Add(layerDict);
         }
     }

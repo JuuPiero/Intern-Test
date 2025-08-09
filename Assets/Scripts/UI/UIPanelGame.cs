@@ -50,6 +50,16 @@ public class UIPanelGame : MonoBehaviour,IMenu
     public void Show()
     {
         this.gameObject.SetActive(true);
+
+        if (GameController.Instance.isTimeAttackMode)
+        {
+            LevelConditionView.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            LevelConditionView.gameObject.SetActive(false);
+        }
        
     }
 
