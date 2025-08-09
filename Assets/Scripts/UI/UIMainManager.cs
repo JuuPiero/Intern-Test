@@ -103,7 +103,6 @@ public class UIMainManager : MonoBehaviour
         {
             return game.LevelConditionView;
         }
-
         return null;
     }
 

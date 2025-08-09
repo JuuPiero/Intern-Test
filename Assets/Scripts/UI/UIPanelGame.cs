@@ -18,21 +18,9 @@ public class UIPanelGame : MonoBehaviour,IMenu
         btnPause.onClick.AddListener(OnClickPause);
     }
 
-    // void Start()
-    // {
-    //     if (!GameController.Instance.isTimeAttackMode)
-    //     {
-    //         LevelConditionView.gameObject.SetActive(false);
-    //     }
-    //     else
-    //     {
-    //         LevelConditionView.gameObject.SetActive(true);
-    //     }
-    // }
-
+   
     void OnEnable()
     {
-        print(GameController.Instance.isTimeAttackMode);
         if (GameController.Instance.isTimeAttackMode)
         {
             LevelConditionView.gameObject.SetActive(true);

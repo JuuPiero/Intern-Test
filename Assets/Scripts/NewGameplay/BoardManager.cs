@@ -100,10 +100,6 @@ namespace NewGameplay
             if (transform.childCount == 0)
             {
                 Debug.Log("thắng!");
-                // if (GameController.Instance.isTimeAttackMode)
-                // {
-                //     GameController.Instance.isTimeAttackMode = false;
-                // }
                 GameController.Instance.State = GameManager.eStateGame.WIN;
             }
         }

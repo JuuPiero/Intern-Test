@@ -66,9 +66,7 @@ public class UIPanelMain : MonoBehaviour, IMenu
         m_mngr.LoadLevelTimer();
     }
 
-   
-
-        private void OnDestroy()
+    private void OnDestroy()
     {
         if (btnMoves) btnMoves.onClick.RemoveAllListeners();
         if (btnTimer) btnTimer.onClick.RemoveAllListeners();
