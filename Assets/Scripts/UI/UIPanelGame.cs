@@ -18,16 +18,21 @@ public class UIPanelGame : MonoBehaviour,IMenu
         btnPause.onClick.AddListener(OnClickPause);
     }
 
-    private void Start()
+    void Start()
     {
         if (!GameController.Instance.isTimeAttackMode)
         {
-            gameObject.SetActive(false);
+            LevelConditionView.gameObject.SetActive(false);
+        }
+        else
+        {
+            LevelConditionView.gameObject.SetActive(true);
         }
     }
 
     void Update()
     {
+        
         LevelConditionView.text = ((int)GameController.Instance.timeRemaining).ToString();
     }
 
@@ -45,6 +50,7 @@ public class UIPanelGame : MonoBehaviour,IMenu
     public void Show()
     {
         this.gameObject.SetActive(true);
+       
     }
 
     public void Hide()

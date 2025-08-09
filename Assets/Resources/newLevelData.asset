@@ -19,6 +19,7 @@ MonoBehaviour:
   randomMaxRows: 6
   randomMinColumns: 2
   randomMaxColumns: 4
-  randomLayerCount: 2
+  randomLayerCount: 3
   matchesMin: 3
   maxPickedCell: 5
+  timeLimit: 60

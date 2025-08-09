@@ -50,8 +50,8 @@ namespace NewGameplay
         {
             LoadLevel();
             timeRemaining = _levelData.timeLimit;
-            StartCoroutine(Countdown());
             isTimeAttackMode = true;
+            StartCoroutine(Countdown());
         }
 
 
